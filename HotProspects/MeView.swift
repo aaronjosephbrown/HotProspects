@@ -75,10 +75,6 @@ struct MeView: View {
         }
         return UIImage(systemName: "xmark.circle") ?? UIImage()
     }
-    
-    func save() {
-        
-    }
 }
 
 #Preview {

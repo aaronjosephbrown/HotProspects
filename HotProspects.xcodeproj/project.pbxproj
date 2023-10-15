@@ -17,6 +17,7 @@
 		1238A4752ADB3DEF003AF19E /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 1238A4742ADB3DEF003AF19E /* CodeScanner */; };
 		1238A4772ADB8DFB003AF19E /* ImageSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1238A4762ADB8DFB003AF19E /* ImageSaver.swift */; };
 		1238A4792ADC60CA003AF19E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1238A4782ADC60CA003AF19E /* User.swift */; };
+		1238A47B2ADCA16A003AF19E /* AddContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1238A47A2ADCA16A003AF19E /* AddContact.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		1238A4712AD98474003AF19E /* Prospect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prospect.swift; sourceTree = "<group>"; };
 		1238A4762ADB8DFB003AF19E /* ImageSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSaver.swift; sourceTree = "<group>"; };
 		1238A4782ADC60CA003AF19E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		1238A47A2ADCA16A003AF19E /* AddContact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContact.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 				1238A4712AD98474003AF19E /* Prospect.swift */,
 				1238A4782ADC60CA003AF19E /* User.swift */,
 				1238A46D2AD97F42003AF19E /* ProspectsView.swift */,
+				1238A47A2ADCA16A003AF19E /* AddContact.swift */,
 				1238A46F2AD97F4C003AF19E /* MeView.swift */,
 				1238A4762ADB8DFB003AF19E /* ImageSaver.swift */,
 				1238A45E2AD78220003AF19E /* Assets.xcassets */,
@@ -160,6 +163,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1238A47B2ADCA16A003AF19E /* AddContact.swift in Sources */,
 				1238A4702AD97F4C003AF19E /* MeView.swift in Sources */,
 				1238A4772ADB8DFB003AF19E /* ImageSaver.swift in Sources */,
 				1238A46E2AD97F42003AF19E /* ProspectsView.swift in Sources */,

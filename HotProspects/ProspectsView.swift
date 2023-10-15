@@ -11,6 +11,7 @@ import UserNotifications
 
 struct ProspectsView: View {
     @State private var isShowingScanner = false
+    @State private var isShowingAddContactSheet = false
     
     enum FilterType {
         case none, contacted, uncontacted
@@ -63,14 +64,26 @@ struct ProspectsView: View {
             }
             .navigationTitle(title)
             .toolbar {
-                Button {
-                    isShowingScanner = true
-                } label: {
-                    Label("Scan", systemImage: "qrcode.viewfinder")
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        isShowingScanner = true
+                    } label: {
+                        Label("Scan", systemImage: "qrcode.viewfinder")
+                    }
+                }
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        isShowingAddContactSheet = true
+                    } label: {
+                        Label("Add Contact", systemImage: "plus")
+                    }
                 }
             }
             .sheet(isPresented: $isShowingScanner) {
                 CodeScannerView(codeTypes: [.qr],simulatedData: "Aaron Brown\naaronabrown@me.com", completion: handleScan)
+            }
+            .sheet(isPresented: $isShowingAddContactSheet) {
+                AddContact()
             }
         }
     }
