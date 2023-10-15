@@ -9,8 +9,9 @@ import CoreImage.CIFilterBuiltins
 import SwiftUI
 
 struct MeView: View {
-    @State private var name = "Aaron Brown"
-    @State private var email = "aaron.brown@me.com"
+    @StateObject var user = User()
+    @State private var qrCode = UIImage()
+    
     
     let context = CIContext()
     let filter = CIFilter.qrCodeGenerator()
@@ -18,21 +19,50 @@ struct MeView: View {
     var body: some View {
         NavigationView {
             Form {
-                Image(uiImage: generateQRCode(from: "\(name)\n\(email)"))
+                Image(uiImage: qrCode)
                     .resizable()
                     .interpolation(.none)
                     .scaledToFit()
-
-                TextField(name, text: $name)
-                    .textContentType(.name)
-                    .font(.title)
-                
-                TextField(email, text: $email)
-                    .textContentType(.emailAddress)
-                    .font(.title)
+                    .contextMenu {
+                        Button {
+                            let imageSavor = ImageSaver()
+                            imageSavor.writeToSavePhotoAlbum(image: qrCode)
+                            
+                            imageSavor.successHandler = {
+                                print("Saved")
+                            }
+                            
+                            imageSavor.errorHandler = { error in
+                                print(error.localizedDescription)
+                            }
+                        } label: {
+                            Label("Save to Photos", systemImage: "square.and.arrow.down")
+                        }
+                    }
+                VStack {
+                    TextField(user.username, text: $user.username)
+                        .textContentType(.name)
+                        .font(.title)
+                    
+                    TextField(user.userEmail, text: $user.userEmail)
+                        .textContentType(.emailAddress)
+                        .font(.title)
+                }
+                .onChange(of: [user.username, user.userEmail]) { _,_ in
+                    updateCode()
+                    user.save()
+                }
             }
-            .navigationTitle("Title")
+            .navigationTitle("My Contact Info")
+            .navigationBarTitleDisplayMode(.inline)
+            .onAppear {
+                updateCode()
+            }
         }
+    }
+    
+    func updateCode() {
+        qrCode = generateQRCode(from: "\(user.username)\n\(user.userEmail)")
     }
     
     func generateQRCode(from string: String) -> UIImage {
@@ -43,11 +73,14 @@ struct MeView: View {
                 return UIImage(cgImage: cgimg)
             }
         }
-        
         return UIImage(systemName: "xmark.circle") ?? UIImage()
+    }
+    
+    func save() {
+        
     }
 }
 
 #Preview {
-    MeView()
+    MeView(user: User())
 }

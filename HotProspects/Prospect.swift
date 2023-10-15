@@ -49,4 +49,14 @@ class Prospect: Identifiable, Codable {
         save()
         return
     }
+    
+    func remove(_ person: Prospect) {
+        // Find the index of the person object
+        if let index = people.firstIndex(where: { $0.id == person.id }) {
+            // Remove the person object from the array
+            people.remove(at: index)
+            // Save the changes
+            save()
+        }
+    }
 }

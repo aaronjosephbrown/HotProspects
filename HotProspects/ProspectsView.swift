@@ -7,6 +7,7 @@
 
 import CodeScanner
 import SwiftUI
+import UserNotifications
 
 struct ProspectsView: View {
     @State private var isShowingScanner = false
@@ -43,6 +44,19 @@ struct ProspectsView: View {
                                 Label("Contacted",systemImage: "checkmark")
                                     .tint(.green)
                             }
+                        }
+                        Button {
+                            addNotification(for: person)
+                        } label: {
+                            Label("Remind me", systemImage: "bell")
+                                .tint(.cyan)
+                        }
+                    }
+                    .swipeActions {
+                        Button(role: .destructive) {
+                            prospects.remove(person)
+                        } label: {
+                            Label("Delete Person", systemImage: "xmark")
                         }
                     }
                 }
@@ -94,11 +108,44 @@ struct ProspectsView: View {
             let newProspect = Prospect()
             newProspect.name = details[0]
             newProspect.email = details[1]
+            
             prospects.add(newProspect)
             return
         case .failure(let error):
             print("Scanning failed: \(error.localizedDescription)")
             return
+        }
+    }
+    
+    func addNotification(for prospect: Prospect) {
+        let center = UNUserNotificationCenter.current()
+        
+        let addRequest = {
+            let content = UNMutableNotificationContent()
+            content.title = "Contact \(prospect)"
+            content.subtitle = prospect.email
+            content.sound = UNNotificationSound.default
+            
+            var dateComponents = DateComponents()
+            dateComponents.hour = 9
+            //            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+            
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+            let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+            center.add(request)
+        }
+        center.getNotificationSettings { settings in
+            if settings.authorizationStatus == .authorized {
+                addRequest()
+            } else {
+                center.requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+                    if success {
+                        addRequest()
+                    } else {
+                        print("Error with notifications")
+                    }
+                }
+            }
         }
     }
 }
